@@ -1,6 +1,6 @@
-// import '../configureAmplify'     
+import '../configureAmplify'     
 import React, { useState, useEffect } from 'react';
-// import { Auth, Hub } from 'aws-amplify';
+import { Auth, Hub } from 'aws-amplify';
 import { ThemeProvider } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import { CacheProvider } from '@emotion/react';
@@ -21,27 +21,27 @@ const clientSideEmotionCache = createEmotionCache();
 
 export default function MyApp(props) {  
   const { Component, emotionCache = clientSideEmotionCache, pageProps } = props;
-  // const [signedInUser, setSignedInUser] = useState(false);
+  const [signedInUser, setSignedInUser] = useState(false);
   
-  // useEffect(() => {
-  //   authListener()
-  // })
+  useEffect(() => {
+    authListener()
+  })
 
-  // async function authListener() {
-  //   Hub.listen('auth', (data) => {
-  //     console.log('hub', data)
-  //     switch (data.payload.event) {
-  //       case 'signIn':
-  //         return setSignedInUser(true)
-  //       case 'signOut':  
-  //         return setSignedInUser(false)
-  //     }
-  //   })
-  //   try {
-  //     await Auth.currentAuthenticatedUser()
-  //     setSignedInUser(true)
-  //   } catch (err) {}
-  // }
+  async function authListener() {
+    Hub.listen('auth', (data) => {
+      console.log('hub', data)
+      switch (data.payload.event) {
+        case 'signIn':
+          return setSignedInUser(true)
+        case 'signOut':  
+          return setSignedInUser(false)
+      }
+    })
+    try {
+      await Auth.currentAuthenticatedUser()
+      setSignedInUser(true)
+    } catch (err) {}
+  }
 
   // const store = useStore(pageProps.initialState)
   
@@ -51,8 +51,7 @@ export default function MyApp(props) {
         <CssBaseline />
         {/* <MobxProvider store={store}> */}
           {/* <AuthProvider session={pageProps.session}> */}
-            {/* <Component {...pageProps} userSignedIn={signedInUser} /> */}
-            <Component {...pageProps} />
+            <Component {...pageProps} userSignedIn={signedInUser} />
           {/* </AuthProvider> */}
         {/* </MobxProvider> */}
       </ThemeProvider>
