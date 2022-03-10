@@ -1,11 +1,11 @@
 import Container from "@mui/material/Container";
 import Layout from '@components/Layouts/Default'
 
-const Homepage = () => {
+const ContactPage = () => {
   return (
-    <Layout title="Home">
+    <Layout title="Contact">
       <Container maxWidth="lg">
-        <h1>Home Page</h1>
+        <h1>Contact</h1>
         <p>
           Lorem ipsum dolor sit amet consectetur, adipisicing elit. Eos,
           cupiditate! Odio, aliquam soluta vel, eum illum corrupti incidunt nobis
@@ -35,11 +35,30 @@ const Homepage = () => {
           culpa cum voluptatibus beatae magnam? Repudiandae ratione iure,
           similique rerum dolore consectetur animi vitae qui delectus pariatur
           sapiente atque eos quaerat sed consequatur, quo suscipit optio harum
-          aliquam adipisci vero.
+          aliquam adipisci vero. Nihil neque nisi eius. Laborum. Voluptatem
+          voluptate officia numquam ut quae. Quod facilis pariatur in nostrum cum
+          quidem at nesciunt fugiat est unde enim commodi, animi nihil, recusandae
+          rerum ducimus sint qui assumenda distinctio id! Natus ea fugit molestiae
+          nostrum! Obcaecati nisi itaque harum. Officia temporibus nobis
+          repellendus beatae dolorem tempore accusamus! Quas debitis quos incidunt
+          dolore aliquam, quam assumenda alias, totam omnis aspernatur saepe? Non
+          debitis ab quis inventore vero. Possimus dicta labore quibusdam
+          consequatur incidunt ea molestias fugit tenetur facere autem reiciendis
+          animi amet, eligendi nobis impedit sunt consectetur deserunt doloremque
+          nisi! Minus. Accusamus nam a soluta porro repudiandae quis at cupiditate
+          ad impedit aperiam recusandae blanditiis ut enim repellendus velit qui
+          cumque alias doloribus, accusantium voluptas quam eius! Consequuntur
+          velit commodi minima. Saepe magnam fugit est et! Vel cumque modi itaque
+          maiores vitae id, esse autem provident necessitatibus eius porro fuga,
+          quod laborum, veritatis eum repellendus voluptatem aliquam ad
+          perferendis quasi corrupti? Voluptates blanditiis earum optio omnis
+          consectetur sapiente? Aliquid, expedita distinctio enim quos quis autem
+          totam blanditiis ducimus laborum temporibus non. Repellat eaque aliquid
+          perspiciatis fuga iste nam! Ut, iusto suscipit.
         </p>
       </Container>
     </Layout>
   );
 };
 
-export default Homepage;
+export default ContactPage;
