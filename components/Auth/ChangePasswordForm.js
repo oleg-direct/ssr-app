@@ -10,6 +10,7 @@ import { useForm } from "react-hook-form";
 import { useRouter } from 'next/router';
 import { useState } from 'react';
 import CircularProgress, {
+  circularProgressClasses,
 } from '@mui/material/CircularProgress';
 
 const useStyles = makeStyles({
@@ -34,7 +35,7 @@ const useStyles = makeStyles({
   },
 });
 
-const VerifyEmailForm = (props) => {
+const ForgotPasswordSubmitForm = (props) => {
   const classes = useStyles();
   const router = useRouter();
   const [errorMessage, setErrorMessage] = useState('');
@@ -47,12 +48,13 @@ const VerifyEmailForm = (props) => {
   } = useForm();
 
   async function onSubmit(data) {
-    const { verificationCode } = data;
+    const { email, newPassword, authCode } = data;
+    
     setFormSubmitting(true);
     setErrorMessage('');
     try {
-      await Auth.signIn(email, password).then((user) => {
-        router.push('/account');
+      await Auth.forgotPasswordSubmit(email, authCode, newPassword).then(() => {
+        router.push('/auth/sign-in');
       })
     } catch (error) {
       setFormSubmitting(false);
@@ -88,16 +90,44 @@ const VerifyEmailForm = (props) => {
       >
         <Box className={classes.inputWrap}>
           <TextField
-            type="text"
-            id="verificationCode"
-            label="Verification Code"
+            type="email"
+            id="email"
+            label="Email"
             variant="outlined"
             {...register("email", {
-              required: { value: true, message: formMessages.verificationCode.required },
-              maxLength: { value: 5, message: formMessages.verificationCode.invalid }
+              required: { value: true, message: formMessages.email.required },
+              // maxLength: { value: 5, message: formMessages.email.maxLength }
             })}
             error={errors.email ? true : false}
             helperText={errors.email ? errors.email.message : ""}
+            disabled={formSubmitting}
+            fullWidth />
+        </Box>
+        <Box className={classes.inputWrap}>
+          <TextField
+            type="password"
+            id="newPassword"
+            label="Password"
+            {...register("newPassword", {
+              required: { value: true, message: formMessages.newPassword.required },
+              // maxLength: { value: 5, message: formMessages.password.maxLength }
+            })}
+            error={errors.newPassword ? true : false}
+            helperText={errors.newPassword ? errors.newPassword.message : ""}
+            disabled={formSubmitting}
+            fullWidth />
+        </Box>
+        <Box className={classes.inputWrap}>
+          <TextField
+            type="test"
+            id="authCode"
+            label="Code"
+            {...register("authCode", {
+              required: { value: true, message: formMessages.authCode.required },
+              // maxLength: { value: 5, message: formMessages.password.maxLength }
+            })}
+            error={errors.authCode ? true : false}
+            helperText={errors.authCode ? errors.authCode.message : ""}
             disabled={formSubmitting}
             fullWidth />
         </Box>
@@ -106,7 +136,7 @@ const VerifyEmailForm = (props) => {
             type="submit"
             variant="contained"
             disabled={formSubmitting}>
-              Verify
+              Update
           </Button>
         </Box>
       </Box>
@@ -115,4 +145,4 @@ const VerifyEmailForm = (props) => {
   )
 }
 
-export default VerifyEmailForm
+export default ForgotPasswordSubmitForm

@@ -54,7 +54,6 @@ const ForgotPasswordForm = (props) => {
     try {
       await Auth.forgotPassword(email).then((res) => {
         console.log('forgotPassword', res); 
-        router.push('/account');
       })
     } catch (error) {
       setFormSubmitting(false);
