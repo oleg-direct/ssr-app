@@ -6,15 +6,13 @@ import CssBaseline from '@mui/material/CssBaseline';
 import { CacheProvider } from '@emotion/react';
 import createEmotionCache from '../lib/createEmotionCache';
 // import "/styles/globals.css";
+import NextNProgress from "nextjs-progressbar";
 import theme from '../lib/mUiTheme';
-import Router from 'next/router';
-import NProgress from 'nprogress';
-import '../lib/ngprogress.css';
+// import Router from 'next/router';
+
 // import { Provider as MobxProvider } from 'mobx-react';
 // import { useStore } from '../store.js';
 // import { Provider as AuthProvider } from "next-auth/client";
-
-Router.events.on('routeChangeStart', () => NProgress.start()); Router.events.on('routeChangeComplete', () => NProgress.done()); Router.events.on('routeChangeError', () => NProgress.done());  
 
 // Client-side cache, shared for the whole session of the user in the browser.
 const clientSideEmotionCache = createEmotionCache();
@@ -51,6 +49,12 @@ export default function MyApp(props) {
         <CssBaseline />
         {/* <MobxProvider store={store}> */}
           {/* <AuthProvider session={pageProps.session}> */}
+            <NextNProgress
+            color="#FFFFFF"
+            startPosition={0.3}
+            stopDelayMs={200}
+            height={3}
+            showOnShallow={true}/>
             <Component {...pageProps} userSignedIn={signedInUser} />
           {/* </AuthProvider> */}
         {/* </MobxProvider> */}
