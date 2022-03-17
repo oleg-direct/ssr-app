@@ -6,6 +6,7 @@ import Alert from '@mui/material/Alert';
 import Button from '@mui/material/Button';
 import { makeStyles } from '@mui/styles';
 import { formMessages } from '@utils/formMessages'
+import { formRegex } from '@utils/formRegex'
 import { useForm } from "react-hook-form";
 import { useRouter } from 'next/router';
 import { useState } from 'react';
@@ -95,7 +96,7 @@ const SignInForm = (props) => {
             variant="outlined"
             {...register("email", {
               required: { value: true, message: formMessages.email.required },
-              // maxLength: { value: 5, message: formMessages.email.maxLength }
+              pattern: { value: formRegex.email.valid, message: formMessages.email.invalid, },
             })}
             error={errors.email ? true : false}
             helperText={errors.email ? errors.email.message : ""}
@@ -109,7 +110,6 @@ const SignInForm = (props) => {
             label="Password"
             {...register("password", {
               required: { value: true, message: formMessages.password.required },
-              // maxLength: { value: 5, message: formMessages.password.maxLength }
             })}
             error={errors.password ? true : false}
             helperText={errors.password ? errors.password.message : ""}

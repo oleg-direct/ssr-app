@@ -114,7 +114,7 @@ const SignUpForm = (props) => {
             variant="outlined"
             {...register("email", {
               required: { value: true, message: formMessages.email.required },
-              pattern: { value: formRegex.email.valid, message: formMessages.email.valid, },
+              pattern: { value: formRegex.email.valid, message: formMessages.email.invalid, },
             })}
             error={errors.email ? true : false}
             helperText={errors.email ? errors.email.message : ""}
@@ -128,7 +128,7 @@ const SignUpForm = (props) => {
             label="Password"
             {...register("password", {
               required: { value: true, message: formMessages.password.required },
-              // maxLength: { value: 5, message: formMessages.password.maxLength }
+              pattern: { value: formRegex.password.valid, message: formMessages.password.invalid, },
             })}
             error={errors.password ? true : false}
             helperText={errors.password ? errors.password.message : ""}

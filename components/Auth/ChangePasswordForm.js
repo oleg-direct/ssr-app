@@ -6,6 +6,7 @@ import Alert from '@mui/material/Alert';
 import Button from '@mui/material/Button';
 import { makeStyles } from '@mui/styles';
 import { formMessages } from '@utils/formMessages'
+import { formRegex } from '@utils/formRegex'
 import { useForm } from "react-hook-form";
 import { useRouter } from 'next/router';
 import { useState } from 'react';
@@ -48,18 +49,21 @@ const ForgotPasswordSubmitForm = (props) => {
   } = useForm();
 
   async function onSubmit(data) {
-    const { email, newPassword, authCode } = data;
+    const { oldPassword, newPassword } = data;
+
+    console.log('oldPassword', oldPassword)
+    console.log('newPassword', newPassword)
     
     setFormSubmitting(true);
     setErrorMessage('');
-    try {
-      await Auth.forgotPasswordSubmit(email, authCode, newPassword).then(() => {
-        router.push('/auth/sign-in');
-      })
-    } catch (error) {
-      setFormSubmitting(false);
-      setErrorMessage(error.message);
-    }
+    // try {
+    //   await Auth.forgotPasswordSubmit(email, authCode, newPassword).then(() => {
+    //     router.push('/auth/sign-in');
+    //   })
+    // } catch (error) {
+    //   setFormSubmitting(false);
+    //   setErrorMessage(error.message);
+    // }
   }
 
   return (
@@ -90,16 +94,14 @@ const ForgotPasswordSubmitForm = (props) => {
       >
         <Box className={classes.inputWrap}>
           <TextField
-            type="email"
-            id="email"
-            label="Email"
-            variant="outlined"
-            {...register("email", {
-              required: { value: true, message: formMessages.email.required },
-              // maxLength: { value: 5, message: formMessages.email.maxLength }
+            type="password"
+            id="oldPassword"
+            label="Old Password"
+            {...register("oldPassword", {
+              required: { value: true, message: formMessages.oldPassword.required },
             })}
-            error={errors.email ? true : false}
-            helperText={errors.email ? errors.email.message : ""}
+            error={errors.oldPassword ? true : false}
+            helperText={errors.oldPassword ? errors.oldPassword.message : ""}
             disabled={formSubmitting}
             fullWidth />
         </Box>
@@ -107,27 +109,13 @@ const ForgotPasswordSubmitForm = (props) => {
           <TextField
             type="password"
             id="newPassword"
-            label="Password"
+            label="New Password"
             {...register("newPassword", {
               required: { value: true, message: formMessages.newPassword.required },
-              // maxLength: { value: 5, message: formMessages.password.maxLength }
+              pattern: { value: formRegex.password.valid, message: formMessages.password.invalid, },
             })}
             error={errors.newPassword ? true : false}
             helperText={errors.newPassword ? errors.newPassword.message : ""}
-            disabled={formSubmitting}
-            fullWidth />
-        </Box>
-        <Box className={classes.inputWrap}>
-          <TextField
-            type="test"
-            id="authCode"
-            label="Code"
-            {...register("authCode", {
-              required: { value: true, message: formMessages.authCode.required },
-              // maxLength: { value: 5, message: formMessages.password.maxLength }
-            })}
-            error={errors.authCode ? true : false}
-            helperText={errors.authCode ? errors.authCode.message : ""}
             disabled={formSubmitting}
             fullWidth />
         </Box>
