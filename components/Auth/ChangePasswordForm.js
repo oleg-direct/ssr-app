@@ -38,7 +38,7 @@ const useStyles = makeStyles({
 
 const ForgotPasswordSubmitForm = (props) => {
   const classes = useStyles();
-  const router = useRouter();
+  const [successMessage, setSuccessMessage] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
   const [formSubmitting, setFormSubmitting] = useState(false);
 
@@ -49,21 +49,23 @@ const ForgotPasswordSubmitForm = (props) => {
   } = useForm();
 
   async function onSubmit(data) {
-    const { oldPassword, newPassword } = data;
+    const { currentPassword, newPassword } = data;
 
-    console.log('oldPassword', oldPassword)
-    console.log('newPassword', newPassword)
-    
     setFormSubmitting(true);
     setErrorMessage('');
-    // try {
-    //   await Auth.forgotPasswordSubmit(email, authCode, newPassword).then(() => {
-    //     router.push('/auth/sign-in');
-    //   })
-    // } catch (error) {
-    //   setFormSubmitting(false);
-    //   setErrorMessage(error.message);
-    // }
+
+    try {
+      await Auth.currentAuthenticatedUser().then((user) => {
+        return Auth.changePassword(user, currentPassword, newPassword)
+          .then((data) => {
+            setFormSubmitting(false);
+            setSuccessMessage('Your password has been updated');
+          })
+      })
+    } catch (error) {
+      setFormSubmitting(false);
+      setErrorMessage(error.message);
+    }
   }
 
   return (
@@ -77,6 +79,13 @@ const ForgotPasswordSubmitForm = (props) => {
       {formSubmitting === true &&
         <Box className={classes.loadingWrap}>
           <CircularProgress />
+        </Box>
+      }
+      {successMessage !== '' &&
+        <Box className={classes.errorWrap}>
+          <Alert severity="success">
+            {successMessage}
+          </Alert>
         </Box>
       }
       {errorMessage !== '' &&
@@ -95,13 +104,13 @@ const ForgotPasswordSubmitForm = (props) => {
         <Box className={classes.inputWrap}>
           <TextField
             type="password"
-            id="oldPassword"
-            label="Old Password"
-            {...register("oldPassword", {
-              required: { value: true, message: formMessages.oldPassword.required },
+            id="currentPassword"
+            label="Current Password"
+            {...register("currentPassword", {
+              required: { value: true, message: formMessages.currentPassword.required },
             })}
-            error={errors.oldPassword ? true : false}
-            helperText={errors.oldPassword ? errors.oldPassword.message : ""}
+            error={errors.currentPassword ? true : false}
+            helperText={errors.currentPassword ? errors.currentPassword.message : ""}
             disabled={formSubmitting}
             fullWidth />
         </Box>

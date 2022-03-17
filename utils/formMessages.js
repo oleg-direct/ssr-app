@@ -11,8 +11,8 @@ export const formMessages = {
     required: "Password is required",
     invalid: "Password needs to be at least 8 characters long and contain at least 3 of the following: Upper case, Lower case, Number, Symbol",
   },
-  oldPassword: {
-    required: "Old Password is required",
+  currentPassword: {
+    required: "Current Password is required",
   },
   newPassword: {
     required: "New Password is required",
