@@ -70,7 +70,6 @@ const SignUpForm = (props) => {
             variant="outlined"
             {...register("name", {
               required: { value: true, message: formMessages.name.required },
-              // maxLength: { value: 5, message: formMessages.name.maxLength }
             })}
             error={errors.name ? true : false}
             helperText={errors.name ? errors.name.message : ""}

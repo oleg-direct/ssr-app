@@ -1,42 +1,13 @@
-import { Auth } from 'aws-amplify'
-import Grid from '@mui/material/Grid';
-import Box from '@mui/material/Box';
-import TextField from '@mui/material/TextField';
-import Alert from '@mui/material/Alert';
-import Button from '@mui/material/Button';
-import { makeStyles } from '@mui/styles';
+import { useState } from 'react';
+import { Auth } from 'aws-amplify';
+import { Grid, Box, TextField, Alert, Button } from '@mui/material';
 import { formMessages } from '@utils/formMessages'
+import { formRegex } from '@utils/formRegex'
 import { useForm } from "react-hook-form";
 import { useRouter } from 'next/router';
-import { useState } from 'react';
-import CircularProgress, {
-  circularProgressClasses,
-} from '@mui/material/CircularProgress';
-
-const useStyles = makeStyles({
-  gridContainer: {
-    // background: 'green'
-  },
-  formWrap: {
-    // background: 'blue'
-  },
-  loadingWrap: {
-    paddingBottom: 20,
-  },
-  errorWrap: {
-    paddingBottom: 20,
-  },
-  inputWrap: {
-    paddingTop: 10,
-    paddingBottom: 10,
-  },
-  submitWrap: {
-    paddingTop: 12,
-  },
-});
+import CircularProgress from '@mui/material/CircularProgress';
 
 const ConfirmSignUpForm = (props) => {
-  const classes = useStyles();
   const router = useRouter();
   const [errorMessage, setErrorMessage] = useState('');
   const [formSubmitting, setFormSubmitting] = useState(false);
@@ -66,16 +37,15 @@ const ConfirmSignUpForm = (props) => {
       container
       direction="row"
       justifyContent="center"
-      alignItems="center"
-      className={classes.gridContainer}>
-      <Grid item xs={6} className={classes.formWrap}>
+      alignItems="center">
+      <Grid item xs={6}>
       {formSubmitting === true &&
-        <Box className={classes.loadingWrap}>
+        <Box>
           <CircularProgress />
         </Box>
       }
       {errorMessage !== '' &&
-        <Box className={classes.errorWrap}>
+        <Box>
           <Alert severity="error">
             {errorMessage}
           </Alert>
@@ -87,7 +57,9 @@ const ConfirmSignUpForm = (props) => {
         autoComplete="off"
         onSubmit={handleSubmit(onSubmit)}
       >
-        <Box className={classes.inputWrap}>
+        <Box sx={{
+          marginBottom: 2,
+        }}>
           <TextField
             type="email"
             id="email"
@@ -95,31 +67,35 @@ const ConfirmSignUpForm = (props) => {
             variant="outlined"
             {...register("email", {
               required: { value: true, message: formMessages.email.required },
-              // maxLength: { value: 5, message: formMessages.email.maxLength }
+              pattern: { value: formRegex.email.valid, message: formMessages.email.invalid, },
             })}
             error={errors.email ? true : false}
             helperText={errors.email ? errors.email.message : ""}
             disabled={formSubmitting}
             fullWidth />
         </Box>
-        <Box className={classes.inputWrap}>
+        <Box sx={{
+          marginBottom: 2,
+        }}>
           <TextField
             type="text"
             id="authCode"
             label="Confirmation Code"
             {...register("authCode", {
-              required: { value: true, message: formMessages.authCode.required },
-              // maxLength: { value: 5, message: formMessages.password.maxLength }
+              required: { value: true, message: formMessages.authCode.required }
             })}
             error={errors.authCode ? true : false}
             helperText={errors.authCode ? errors.authCode.message : ""}
             disabled={formSubmitting}
             fullWidth />
         </Box>
-        <Box className={classes.submitWrap}>
+        <Box sx={{
+          marginBottom: 2,
+        }}>
           <Button
             type="submit"
             variant="contained"
+            size="large"
             disabled={formSubmitting}>
               Confirm
           </Button>
