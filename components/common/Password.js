@@ -36,7 +36,7 @@ const MuiPassword = (props) => {
             </IconButton>
           </InputAdornment>
         }
-        label="Password"
+        label={label}
         fullWidth={fullWidth}
       />
       <FormHelperText error={error}>{helperText}</FormHelperText>

@@ -7,6 +7,8 @@ import { formRegex } from '@utils/formRegex';
 import { useForm } from "react-hook-form";
 import { useRouter } from 'next/router';
 import CircularProgress from '@mui/material/CircularProgress';
+import MuiInput from '@components/common/Input';
+import MuiPassword from '@components/common/Password';
 
 const SignInForm = (props) => {
   const router = useRouter();
@@ -58,37 +60,33 @@ const SignInForm = (props) => {
         autoComplete="off"
         onSubmit={handleSubmit(onSubmit)}
       >
-        <Box sx={{
-          marginBottom: 2,
-        }}>
-          <TextField
-            type="email"
-            id="email"
+        <Box>
+          <MuiInput
             label="Email"
-            variant="outlined"
-            {...register("email", {
+            id="email"
+            type="email"
+            register={register("email", {
               required: { value: true, message: formMessages.email.required },
               pattern: { value: formRegex.email.valid, message: formMessages.email.invalid, },
             })}
             error={errors.email ? true : false}
             helperText={errors.email ? errors.email.message : ""}
             disabled={formSubmitting}
-            fullWidth />
+            fullWidth
+          />
         </Box>
-        <Box sx={{
-          marginBottom: 2,
-        }}>
-          <TextField
-            type="password"
-            id="password"
+        <Box>
+          <MuiPassword
             label="Password"
-            {...register("password", {
+            id="password"
+            register={register("password", {
               required: { value: true, message: formMessages.password.required },
             })}
             error={errors.password ? true : false}
             helperText={errors.password ? errors.password.message : ""}
             disabled={formSubmitting}
-            fullWidth />
+            fullWidth
+          />
         </Box>
         <Box>
           <Button

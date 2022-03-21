@@ -25,9 +25,7 @@ export const formMessages = {
     required: "Verification Code is required",
     invalid: "Verification Code is invalid!",
   },
-  emailRequired: 'Please enter email',
-  emailInvalid: 'Please enter valid email',
-  passwordRequired: 'Please enter password',
-  passwordInvalid: 'Password needs to be at least 8 characters long and contain the following: uppercase letters, lowercase letters, special characters, numbers.',
-  confirmPasswordNotMatching: 'Passwords don\'t match',
+  forgotPasswordForm: {
+    success: "Go check your email and confirm"
+  }
 }

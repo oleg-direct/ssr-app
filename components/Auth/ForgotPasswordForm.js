@@ -1,14 +1,13 @@
 import { Auth } from 'aws-amplify'
-import { Grid, Box, TextField, Alert, Button } from '@mui/material';
+import { Grid, Box, Alert, Button, CircularProgress } from '@mui/material';
 import { formMessages } from '@utils/formMessages'
 import { formRegex } from '@utils/formRegex'
 import { useForm } from "react-hook-form";
-import { useRouter } from 'next/router';
 import { useState } from 'react';
-import CircularProgress from '@mui/material/CircularProgress';
+import MuiInput from '@components/common/Input';
 
 const ForgotPasswordForm = (props) => {
-  const router = useRouter();
+  const [successMessage, setSuccessMessage] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
   const [formSubmitting, setFormSubmitting] = useState(false);
 
@@ -24,7 +23,9 @@ const ForgotPasswordForm = (props) => {
     setErrorMessage('');
     try {
       await Auth.forgotPassword(email).then((res) => {
-        console.log('forgotPassword', res); 
+        setFormSubmitting(false);
+        setSuccessMessage(formMessages.forgotPasswordForm.success)
+        
       })
     } catch (error) {
       setFormSubmitting(false);
@@ -44,6 +45,13 @@ const ForgotPasswordForm = (props) => {
           <CircularProgress />
         </Box>
       }
+      {successMessage !== '' &&
+        <Box>
+          <Alert severity="success">
+            {successMessage}
+          </Alert>
+        </Box>
+      }
       {errorMessage !== '' &&
         <Box>
           <Alert severity="error">
@@ -57,15 +65,12 @@ const ForgotPasswordForm = (props) => {
         autoComplete="off"
         onSubmit={handleSubmit(onSubmit)}
       >
-        <Box sx={{
-          marginBottom: 2,
-        }}>
-          <TextField
-            type="email"
-            id="email"
+        <Box>
+          <MuiInput
             label="Email"
-            variant="outlined"
-            {...register("email", {
+            id="email"
+            type="email"
+            register={register("email", {
               required: { value: true, message: formMessages.email.required },
               pattern: { value: formRegex.email.valid, message: formMessages.email.invalid, },
             })}

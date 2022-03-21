@@ -1,10 +1,10 @@
 import { useState } from 'react';
 import { Auth } from 'aws-amplify';
-import { Grid, Box, TextField, Alert, Button } from '@mui/material';
+import { Grid, Box, TextField, Alert, Button, CircularProgress } from '@mui/material';
 import { formMessages } from '@utils/formMessages'
 import { formRegex } from '@utils/formRegex'
 import { useForm } from "react-hook-form";
-import CircularProgress from '@mui/material/CircularProgress';
+import MuiPassword from '@components/common/Password';
 
 const ForgotPasswordSubmitForm = (props) => {
   const [successMessage, setSuccessMessage] = useState('');
@@ -69,14 +69,11 @@ const ForgotPasswordSubmitForm = (props) => {
         autoComplete="off"
         onSubmit={handleSubmit(onSubmit)}
       >
-        <Box sx={{
-          marginBottom: 2,
-        }}>
-          <TextField
-            type="password"
-            id="currentPassword"
+        <Box>
+          <MuiPassword
             label="Current Password"
-            {...register("currentPassword", {
+            id="currentPassword"
+            register={register("currentPassword", {
               required: { value: true, message: formMessages.currentPassword.required },
             })}
             error={errors.currentPassword ? true : false}
@@ -84,14 +81,11 @@ const ForgotPasswordSubmitForm = (props) => {
             disabled={formSubmitting}
             fullWidth />
         </Box>
-        <Box sx={{
-          marginBottom: 2,
-        }}>
-          <TextField
-            type="password"
+        <Box>
+          <MuiPassword
             id="newPassword"
             label="New Password"
-            {...register("newPassword", {
+            register={register("newPassword", {
               required: { value: true, message: formMessages.newPassword.required },
               pattern: { value: formRegex.password.valid, message: formMessages.password.invalid, },
             })}

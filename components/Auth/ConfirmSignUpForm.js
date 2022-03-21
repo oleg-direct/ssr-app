@@ -1,11 +1,11 @@
 import { useState } from 'react';
 import { Auth } from 'aws-amplify';
-import { Grid, Box, TextField, Alert, Button } from '@mui/material';
-import { formMessages } from '@utils/formMessages'
-import { formRegex } from '@utils/formRegex'
+import { Grid, Box, TextField, Alert, Button, CircularProgress } from '@mui/material';
+import { formMessages } from '@utils/formMessages';
+import { formRegex } from '@utils/formRegex';
 import { useForm } from "react-hook-form";
 import { useRouter } from 'next/router';
-import CircularProgress from '@mui/material/CircularProgress';
+import MuiInput from '@components/common/Input';
 
 const ConfirmSignUpForm = (props) => {
   const router = useRouter();
@@ -57,31 +57,27 @@ const ConfirmSignUpForm = (props) => {
         autoComplete="off"
         onSubmit={handleSubmit(onSubmit)}
       >
-        <Box sx={{
-          marginBottom: 2,
-        }}>
-          <TextField
-            type="email"
-            id="email"
+        <Box>
+          <MuiInput
             label="Email"
-            variant="outlined"
-            {...register("email", {
+            id="email"
+            type="email"
+            register={register("email", {
               required: { value: true, message: formMessages.email.required },
               pattern: { value: formRegex.email.valid, message: formMessages.email.invalid, },
             })}
             error={errors.email ? true : false}
             helperText={errors.email ? errors.email.message : ""}
             disabled={formSubmitting}
-            fullWidth />
+            fullWidth
+          />
         </Box>
-        <Box sx={{
-          marginBottom: 2,
-        }}>
-          <TextField
-            type="text"
-            id="authCode"
+        <Box>
+          <MuiInput
             label="Confirmation Code"
-            {...register("authCode", {
+            id="authCode"
+            type="text"
+            register={register("authCode", {
               required: { value: true, message: formMessages.authCode.required }
             })}
             error={errors.authCode ? true : false}
@@ -89,9 +85,7 @@ const ConfirmSignUpForm = (props) => {
             disabled={formSubmitting}
             fullWidth />
         </Box>
-        <Box sx={{
-          marginBottom: 2,
-        }}>
+        <Box>
           <Button
             type="submit"
             variant="contained"
