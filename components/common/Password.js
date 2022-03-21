@@ -3,7 +3,7 @@ import { IconButton, FormControl, InputLabel, OutlinedInput, InputAdornment, For
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 
 const MuiPassword = (props) => {
-  const { register, label, id, error, helperText, loading } = props
+  const { register, label, id, error, helperText, fullWidth, loading } = props
   const [showPassword, setShowPassword] = React.useState(false)
 
   const handleClickShowPassword = () => {
@@ -15,11 +15,12 @@ const MuiPassword = (props) => {
   }
 
   return (
-    <FormControl sx={{ m: 1, width: '25ch' }} variant="outlined">
+    <FormControl variant="outlined" sx={{ mb: 2 }} fullWidth={fullWidth}>
       <InputLabel htmlFor={id} error={error}>{label}</InputLabel>
       <OutlinedInput
         {...register}
         id={id}
+        name={id}
         type={showPassword ? 'text' : 'password'}
         disabled={loading}
         error={error}
@@ -36,6 +37,7 @@ const MuiPassword = (props) => {
           </InputAdornment>
         }
         label="Password"
+        fullWidth={fullWidth}
       />
       <FormHelperText error={error}>{helperText}</FormHelperText>
     </FormControl>
