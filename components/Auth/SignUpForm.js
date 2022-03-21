@@ -1,11 +1,11 @@
 import { useState } from 'react';
 import { Auth } from 'aws-amplify'
-import { Grid, Box, TextField, Alert, Button } from '@mui/material';
+import { Grid, Box, TextField, Alert, Button, CircularProgress } from '@mui/material';
 import { formMessages } from '@utils/formMessages'
 import { formRegex } from '@utils/formRegex'
 import { useForm } from "react-hook-form";
 import { useRouter } from 'next/router';
-import CircularProgress from '@mui/material/CircularProgress';
+import MuiPassword from '@components/common/Password'
 
 const SignUpForm = (props) => {
   const router = useRouter();
@@ -19,6 +19,7 @@ const SignUpForm = (props) => {
   } = useForm();
 
   async function onSubmit(data) {
+    console.log('onSubmit', data)
     const { name, email, password } = data;
     setFormSubmitting(true);
     setErrorMessage('');
@@ -93,22 +94,17 @@ const SignUpForm = (props) => {
             disabled={formSubmitting}
             fullWidth />
         </Box>
-        <Box sx={{
-          marginBottom: 2,
-        }}>
-          <TextField
-            type="password"
-            id="password"
-            label="Password"
-            {...register("password", {
-              required: { value: true, message: formMessages.password.required },
-              pattern: { value: formRegex.password.valid, message: formMessages.password.invalid, },
-            })}
-            error={errors.password ? true : false}
-            helperText={errors.password ? errors.password.message : ""}
-            disabled={formSubmitting}
-            fullWidth />
-        </Box>
+        <MuiPassword
+          label="Password"
+          id="password"
+          register={register("password", {
+            required: { value: true, message: formMessages.password.required },
+            pattern: { value: formRegex.password.valid, message: formMessages.password.invalid, },
+          })}
+          error={errors.password ? true : false}
+          helperText={errors.password ? errors.password.message : ""}
+          disabled={formSubmitting}
+        />
         <Box>
           <Button
             type="submit"
