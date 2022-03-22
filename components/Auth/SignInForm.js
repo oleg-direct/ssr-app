@@ -1,14 +1,12 @@
 
 import { useState } from 'react';
 import { Auth } from 'aws-amplify';
-import { Grid, Box, TextField, Alert, Button } from '@mui/material';
+import { Grid, Box, Alert, AlertTitle } from '@mui/material';
 import { formMessages } from '@utils/formMessages';
 import { formRegex } from '@utils/formRegex';
 import { useForm } from "react-hook-form";
 import { useRouter } from 'next/router';
-import CircularProgress from '@mui/material/CircularProgress';
-import MuiInput from '@components/common/Input';
-import MuiPassword from '@components/common/Password';
+import { MuiInput, MuiPassword, SubmitButton} from '@components/common';
 
 const SignInForm = (props) => {
   const router = useRouter();
@@ -42,14 +40,10 @@ const SignInForm = (props) => {
       justifyContent="center"
       alignItems="center">
       <Grid item xs={6}>
-      {formSubmitting === true &&
-        <Box>
-          <CircularProgress />
-        </Box>
-      }
       {errorMessage !== '' &&
-        <Box>
+        <Box sx={{mb: 4 }}>
           <Alert severity="error">
+            <AlertTitle>Error</AlertTitle>
             {errorMessage}
           </Alert>
         </Box>
@@ -89,13 +83,9 @@ const SignInForm = (props) => {
           />
         </Box>
         <Box>
-          <Button
-            type="submit"
-            variant="contained"
-            size="large"
-            disabled={formSubmitting}>
-              Sign In
-          </Button>
+          <SubmitButton loading={formSubmitting}>
+            Sign In
+          </SubmitButton>
         </Box>
       </Box>
     </Grid>

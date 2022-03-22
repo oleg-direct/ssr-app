@@ -31,7 +31,7 @@ const AccountPage = (props) => {
           <Button variant="contained" component={Link} href="/account/change-password">Change Password</Button>
         </Box>
         <Box mt={2} mb={2}>
-          <Button variant="contained">Update Profile</Button>
+          <Button variant="contained" component={Link} href="/account/update-profile">Update Profile</Button>
         </Box>
         <Button variant="contained" onClick={() => signOut()}>Sign Out</Button>
       </Container>
