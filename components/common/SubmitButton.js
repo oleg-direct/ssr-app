@@ -10,9 +10,7 @@ return (
         variant="contained"
         size="large"
         loading={loading}
-        // sx={{
-        //     'box-shadow': '0px 8px 20px 0px rgb(103 58 183 / 30%)'
-        // }}
+        disableRipple
         >
         {children}
     </LoadingButton>

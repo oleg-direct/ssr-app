@@ -8,7 +8,7 @@ import { useForm } from "react-hook-form";
 import { useRouter } from 'next/router';
 import { MuiInput, MuiPassword, SubmitButton} from '@components/common';
 
-const SignInForm = (props) => {
+const SignInForm = () => {
   const router = useRouter();
   const [errorMessage, setErrorMessage] = useState('');
   const [formSubmitting, setFormSubmitting] = useState(false);

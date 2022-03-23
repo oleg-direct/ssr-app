@@ -1,14 +1,13 @@
 import { useState } from 'react';
 import { Auth } from 'aws-amplify'
-import { Grid, Box, TextField, Alert, Button, CircularProgress } from '@mui/material';
+import { Grid, Box, AlertTitle, Alert, Button } from '@mui/material';
 import { formMessages } from '@utils/formMessages'
 import { formRegex } from '@utils/formRegex'
 import { useForm } from "react-hook-form";
 import { useRouter } from 'next/router';
-import MuiInput from '@components/common/Input';
-import MuiPassword from '@components/common/Password';
+import { MuiInput, MuiPassword, SubmitButton} from '@components/common';
 
-const SignUpForm = (props) => {
+const SignUpForm = () => {
   const router = useRouter();
   const [errorMessage, setErrorMessage] = useState('');
   const [formSubmitting, setFormSubmitting] = useState(false);
@@ -27,11 +26,8 @@ const SignUpForm = (props) => {
 
     try {
       await Auth.signUp({ name: name, username: email, password, attributes: { email, name }}).then((user) => {
-        console.log(user)
-        router.push('/account');
-      }).catch((error) => {
-        setFormSubmitting(false);
-        setErrorMessage(error.message);
+        console.log('success', user)
+        // router.push('/account');
       })
     } catch (error) {
       setFormSubmitting(false);
@@ -46,14 +42,10 @@ const SignUpForm = (props) => {
       justifyContent="center"
       alignItems="center">
       <Grid item xs={6}>
-      {formSubmitting === true &&
-        <Box>
-          <CircularProgress />
-        </Box>
-      }
       {errorMessage !== '' &&
-        <Box>
+        <Box sx={{mb: 4 }}>
           <Alert severity="error">
+            <AlertTitle>Error</AlertTitle>
             {errorMessage}
           </Alert>
         </Box>
@@ -108,13 +100,9 @@ const SignUpForm = (props) => {
           />
         </Box>
         <Box>
-          <Button
-            type="submit"
-            variant="contained"
-            size="large"
-            disabled={formSubmitting}>
-              Sign Up
-          </Button>
+          <SubmitButton loading={formSubmitting}>
+            Sign Up
+          </SubmitButton>
         </Box>
       </Box>
     </Grid>

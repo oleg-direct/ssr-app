@@ -2,7 +2,7 @@ import React from 'react';
 import { FormControl, InputLabel, OutlinedInput, FormHelperText } from '@mui/material';
 
 const MuiInput = (props) => {
-  const { register, label, type, id, error, helperText, fullWidth, loading } = props
+  const { register, label, type, id, error, helperText, fullWidth, disabled } = props
 
   return (
     <FormControl variant="outlined" sx={{ mb: 2 }} fullWidth={fullWidth}>
@@ -12,7 +12,7 @@ const MuiInput = (props) => {
         id={id}
         name={id}
         type={type}
-        disabled={loading}
+        disabled={disabled}
         error={error}
         label={label}
         fullWidth={fullWidth}
