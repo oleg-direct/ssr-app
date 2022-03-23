@@ -2,22 +2,20 @@
 import { useState } from 'react';
 import { Auth } from 'aws-amplify';
 import { Grid, Box, Alert, AlertTitle } from '@mui/material';
-import { formMessages } from '@utils/formMessages';
-import { formRegex } from '@utils/formRegex';
 import { useForm } from "react-hook-form";
 import { useRouter } from 'next/router';
 import { MuiInput, MuiPassword, SubmitButton} from '@components/common';
+import { yupResolver } from "@hookform/resolvers/yup";
+import { singInSchema } from '@utils/yupSchema';
 
 const SignInForm = () => {
   const router = useRouter();
   const [errorMessage, setErrorMessage] = useState('');
   const [formSubmitting, setFormSubmitting] = useState(false);
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors }
-  } = useForm();
+  const { register, handleSubmit, formState: { errors } } = useForm({
+    resolver: yupResolver(singInSchema),
+  });
 
   async function onSubmit(data) {
     const { email, password } = data;
@@ -59,10 +57,7 @@ const SignInForm = () => {
             label="Email"
             id="email"
             type="email"
-            register={register("email", {
-              required: { value: true, message: formMessages.email.required },
-              pattern: { value: formRegex.email.valid, message: formMessages.email.invalid, },
-            })}
+            register={register("email")}
             error={errors.email ? true : false}
             helperText={errors.email ? errors.email.message : ""}
             disabled={formSubmitting}
@@ -73,9 +68,7 @@ const SignInForm = () => {
           <MuiPassword
             label="Password"
             id="password"
-            register={register("password", {
-              required: { value: true, message: formMessages.password.required },
-            })}
+            register={register("password")}
             error={errors.password ? true : false}
             helperText={errors.password ? errors.password.message : ""}
             disabled={formSubmitting}

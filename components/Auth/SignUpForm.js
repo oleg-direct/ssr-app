@@ -6,17 +6,17 @@ import { formRegex } from '@utils/formRegex'
 import { useForm } from "react-hook-form";
 import { useRouter } from 'next/router';
 import { MuiInput, MuiPassword, SubmitButton} from '@components/common';
+import { yupResolver } from "@hookform/resolvers/yup";
+import { singUpSchema } from '@utils/yupSchema';
 
 const SignUpForm = () => {
   const router = useRouter();
   const [errorMessage, setErrorMessage] = useState('');
   const [formSubmitting, setFormSubmitting] = useState(false);
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors }
-  } = useForm();
+  const { register, handleSubmit, formState: { errors } } = useForm({
+    resolver: yupResolver(singUpSchema),
+  });
 
   async function onSubmit(data) {
     const { name, email, password } = data;
@@ -61,9 +61,7 @@ const SignUpForm = () => {
             label="Name"
             id="name"
             type="text"
-            register={register("name", {
-              required: { value: true, message: formMessages.name.required },
-            })}
+            register={register("name")}
             error={errors.name ? true : false}
             helperText={errors.name ? errors.name.message : ""}
             disabled={formSubmitting}
@@ -75,10 +73,7 @@ const SignUpForm = () => {
             label="Email"
             id="email"
             type="email"
-            register={register("email", {
-              required: { value: true, message: formMessages.email.required },
-              pattern: { value: formRegex.email.valid, message: formMessages.email.invalid, },
-            })}
+            register={register("email")}
             error={errors.email ? true : false}
             helperText={errors.email ? errors.email.message : ""}
             disabled={formSubmitting}
@@ -89,10 +84,7 @@ const SignUpForm = () => {
           <MuiPassword
             label="Password"
             id="password"
-            register={register("password", {
-              required: { value: true, message: formMessages.password.required },
-              pattern: { value: formRegex.password.valid, message: formMessages.password.invalid, },
-            })}
+            register={register("password")}
             error={errors.password ? true : false}
             helperText={errors.password ? errors.password.message : ""}
             disabled={formSubmitting}
