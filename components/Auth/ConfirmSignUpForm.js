@@ -1,22 +1,20 @@
 import { useState } from 'react';
 import { Auth } from 'aws-amplify';
 import { Grid, Box, TextField, Alert, Button, CircularProgress } from '@mui/material';
-import { formMessages } from '@utils/formMessages';
-import { formRegex } from '@utils/formRegex';
 import { useForm } from "react-hook-form";
 import { useRouter } from 'next/router';
 import MuiInput from '@components/common/Input';
+import { yupResolver } from "@hookform/resolvers/yup";
+import { ConfirmSignUpSchema } from '@utils/yupSchema';
 
-const ConfirmSignUpForm = (props) => {
+const ConfirmSignUpForm = () => {
   const router = useRouter();
   const [errorMessage, setErrorMessage] = useState('');
   const [formSubmitting, setFormSubmitting] = useState(false);
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors }
-  } = useForm();
+  const { register, handleSubmit, formState: { errors } } = useForm({
+    resolver: yupResolver(ConfirmSignUpSchema),
+  });
 
   async function onSubmit(data) {
     const { email, authCode } = data;
@@ -62,10 +60,7 @@ const ConfirmSignUpForm = (props) => {
             label="Email"
             id="email"
             type="email"
-            register={register("email", {
-              required: { value: true, message: formMessages.email.required },
-              pattern: { value: formRegex.email.valid, message: formMessages.email.invalid, },
-            })}
+            register={register("email")}
             error={errors.email ? true : false}
             helperText={errors.email ? errors.email.message : ""}
             disabled={formSubmitting}
@@ -77,9 +72,7 @@ const ConfirmSignUpForm = (props) => {
             label="Confirmation Code"
             id="authCode"
             type="text"
-            register={register("authCode", {
-              required: { value: true, message: formMessages.authCode.required }
-            })}
+            register={register("authCode")}
             error={errors.authCode ? true : false}
             helperText={errors.authCode ? errors.authCode.message : ""}
             disabled={formSubmitting}

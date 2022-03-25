@@ -1,7 +1,7 @@
 
 import { useState } from 'react';
 import { Auth } from 'aws-amplify';
-import { Grid, Box, Alert, AlertTitle } from '@mui/material';
+import { Grid, Box, Alert, AlertTitle, Link } from '@mui/material';
 import { useForm } from "react-hook-form";
 import { useRouter } from 'next/router';
 import { MuiInput, MuiPassword, SubmitButton} from '@components/common';
@@ -74,6 +74,9 @@ const SignInForm = () => {
             disabled={formSubmitting}
             fullWidth
           />
+        </Box>
+        <Box sx={{ mb: 2 }}>
+          <Link href="/auth/forgot-password">Forgot Password?</Link>
         </Box>
         <Box>
           <SubmitButton loading={formSubmitting}>

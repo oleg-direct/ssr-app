@@ -15,7 +15,7 @@ export const singInSchema = yup.object().shape({
 export const singUpSchema = yup.object().shape({
     name: yup
     .string()
-    .required(formMessages.email.required),
+    .required(formMessages.name.required),
     email: yup
     .string()
     .email(formMessages.email.invalid)
@@ -24,4 +24,21 @@ export const singUpSchema = yup.object().shape({
     .string()
     .required(formMessages.password.required)
     .matches(formRegex.password, formMessages.password.invalid)
+})
+
+export const forgotPasswordSchema = yup.object().shape({
+    email: yup
+    .string()
+    .email(formMessages.email.invalid)
+    .required(formMessages.email.required),
+})
+
+export const ConfirmSignUpSchema = yup.object().shape({
+    email: yup
+    .string()
+    .email(formMessages.email.invalid)
+    .required(formMessages.email.required),
+    authCode: yup
+    .string()
+    .required(formMessages.authCode.required),
 })
