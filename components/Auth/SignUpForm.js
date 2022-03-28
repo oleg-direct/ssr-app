@@ -1,8 +1,6 @@
 import { useState } from 'react';
 import { Auth } from 'aws-amplify'
-import { Grid, Box, AlertTitle, Alert, Button } from '@mui/material';
-import { formMessages } from '@utils/formMessages'
-import { formRegex } from '@utils/formRegex'
+import { Grid, Box, AlertTitle, Alert } from '@mui/material';
 import { useForm } from "react-hook-form";
 import { useRouter } from 'next/router';
 import { MuiInput, MuiPassword, SubmitButton} from '@components/common';

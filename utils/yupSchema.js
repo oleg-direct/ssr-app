@@ -42,3 +42,31 @@ export const ConfirmSignUpSchema = yup.object().shape({
     .string()
     .required(formMessages.authCode.required),
 })
+
+export const ChangePasswordSchema = yup.object().shape({
+    currentPassword: yup
+    .string()
+    .required(formMessages.password.required),
+    newPassword: yup
+    .string()
+    .required(formMessages.password.required)
+    .matches(formRegex.password, formMessages.password.invalid),
+    confirmNewPassword: yup
+    .string()
+    .required(formMessages.password.required)
+    .oneOf([yup.ref('newPassword'), null], 'New Password and Confirm New Password must match.'),
+})
+
+export const forgotPasswordSubmitSchema = yup.object().shape({
+    email: yup
+    .string()
+    .email(formMessages.email.invalid)
+    .required(formMessages.email.required),
+    newPassword: yup
+    .string()
+    .required(formMessages.password.required)
+    .matches(formRegex.password, formMessages.password.invalid),
+    authCode: yup
+    .string()
+    .required(formMessages.authCode.required),
+})

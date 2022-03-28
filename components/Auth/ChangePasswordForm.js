@@ -1,21 +1,19 @@
 import { useState } from 'react';
 import { Auth } from 'aws-amplify';
-import { Grid, Box, TextField, Alert, Button, CircularProgress } from '@mui/material';
-import { formMessages } from '@utils/formMessages'
-import { formRegex } from '@utils/formRegex'
+import { Grid, Box, Alert, AlertTitle } from '@mui/material';
 import { useForm } from "react-hook-form";
-import MuiPassword from '@components/common/Password';
+import { MuiPassword, SubmitButton} from '@components/common';
+import { yupResolver } from "@hookform/resolvers/yup";
+import { ChangePasswordSchema } from '@utils/yupSchema';
 
 const ForgotPasswordSubmitForm = (props) => {
   const [successMessage, setSuccessMessage] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
   const [formSubmitting, setFormSubmitting] = useState(false);
-
-  const {
-    register,
-    handleSubmit,
-    formState: { errors }
-  } = useForm();
+  
+  const { register, handleSubmit, formState: { errors } } = useForm({
+    resolver: yupResolver(ChangePasswordSchema),
+  });
 
   async function onSubmit(data) {
     const { currentPassword, newPassword } = data;
@@ -44,21 +42,18 @@ const ForgotPasswordSubmitForm = (props) => {
       justifyContent="center"
       alignItems="center">
       <Grid item xs={6}>
-      {formSubmitting === true &&
-        <Box>
-          <CircularProgress />
-        </Box>
-      }
       {successMessage !== '' &&
-        <Box>
+        <Box sx={{mb: 4 }}>
           <Alert severity="success">
+            <AlertTitle>Success</AlertTitle>
             {successMessage}
           </Alert>
         </Box>
       }
       {errorMessage !== '' &&
-        <Box>
+        <Box sx={{mb: 4 }}>
           <Alert severity="error">
+            <AlertTitle>Error</AlertTitle>
             {errorMessage}
           </Alert>
         </Box>
@@ -69,13 +64,11 @@ const ForgotPasswordSubmitForm = (props) => {
         autoComplete="off"
         onSubmit={handleSubmit(onSubmit)}
       >
-        <Box>
+        <Box sx={{mb: 2 }}>
           <MuiPassword
             label="Current Password"
             id="currentPassword"
-            register={register("currentPassword", {
-              required: { value: true, message: formMessages.currentPassword.required },
-            })}
+            register={register("currentPassword")}
             error={errors.currentPassword ? true : false}
             helperText={errors.currentPassword ? errors.currentPassword.message : ""}
             disabled={formSubmitting}
@@ -85,23 +78,26 @@ const ForgotPasswordSubmitForm = (props) => {
           <MuiPassword
             id="newPassword"
             label="New Password"
-            register={register("newPassword", {
-              required: { value: true, message: formMessages.newPassword.required },
-              pattern: { value: formRegex.password.valid, message: formMessages.password.invalid, },
-            })}
+            register={register("newPassword")}
             error={errors.newPassword ? true : false}
             helperText={errors.newPassword ? errors.newPassword.message : ""}
             disabled={formSubmitting}
             fullWidth />
         </Box>
         <Box>
-          <Button
-            type="submit"
-            variant="contained"
-            size="large"
-            disabled={formSubmitting}>
-              Update
-          </Button>
+          <MuiPassword
+            id="confirmNewPassword"
+            label="Confirm New Password"
+            register={register("confirmNewPassword")}
+            error={errors.confirmNewPassword ? true : false}
+            helperText={errors.confirmNewPassword ? errors.confirmNewPassword.message : ""}
+            disabled={formSubmitting}
+            fullWidth />
+        </Box>
+        <Box>
+          <SubmitButton loading={formSubmitting}>
+            Update
+          </SubmitButton>
         </Box>
       </Box>
     </Grid>

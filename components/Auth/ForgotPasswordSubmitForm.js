@@ -1,23 +1,20 @@
 import { Auth } from 'aws-amplify'
-import { Grid, Box, TextField, Alert, Button, CircularProgress } from '@mui/material';
-import { formMessages } from '@utils/formMessages'
+import { Grid, Box, Alert, AlertTitle } from '@mui/material';
 import { useForm } from "react-hook-form";
-import { formRegex } from '@utils/formRegex'
 import { useRouter } from 'next/router';
 import { useState } from 'react';
-import MuiInput from '@components/common/Input';
-import MuiPassword from '@components/common/Password';
+import { MuiInput, MuiPassword, SubmitButton} from '@components/common';
+import { yupResolver } from "@hookform/resolvers/yup";
+import { forgotPasswordSubmitSchema } from '@utils/yupSchema';
 
 const ForgotPasswordSubmitForm = (props) => {
   const router = useRouter();
   const [errorMessage, setErrorMessage] = useState('');
   const [formSubmitting, setFormSubmitting] = useState(false);
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors }
-  } = useForm();
+  const { register, handleSubmit, formState: { errors } } = useForm({
+    resolver: yupResolver(forgotPasswordSubmitSchema),
+  });
 
   async function onSubmit(data) {
     const { email, newPassword, authCode } = data;
@@ -41,14 +38,10 @@ const ForgotPasswordSubmitForm = (props) => {
       justifyContent="center"
       alignItems="center">
       <Grid item xs={6}>
-      {formSubmitting === true &&
-        <Box>
-          <CircularProgress />
-        </Box>
-      }
       {errorMessage !== '' &&
-        <Box>
+        <Box sx={{mb: 4 }}>
           <Alert severity="error">
+            <AlertTitle>Error</AlertTitle>
             {errorMessage}
           </Alert>
         </Box>
@@ -64,10 +57,7 @@ const ForgotPasswordSubmitForm = (props) => {
             label="Email"
             id="email"
             type="email"
-            register={register("email", {
-              required: { value: true, message: formMessages.email.required },
-              pattern: { value: formRegex.email.valid, message: formMessages.email.invalid, },
-            })}
+            register={register("email")}
             error={errors.email ? true : false}
             helperText={errors.email ? errors.email.message : ""}
             disabled={formSubmitting}
@@ -79,10 +69,7 @@ const ForgotPasswordSubmitForm = (props) => {
             type="password"
             id="newPassword"
             label="New Password"
-            register={register("newPassword", {
-              required: { value: true, message: formMessages.password.required },
-              pattern: { value: formRegex.password.valid, message: formMessages.password.invalid, },
-            })}
+            register={register("newPassword")}
             error={errors.newPassword ? true : false}
             helperText={errors.newPassword ? errors.newPassword.message : ""}
             disabled={formSubmitting}
@@ -94,9 +81,7 @@ const ForgotPasswordSubmitForm = (props) => {
             label="Code"
             id="authCode"
             type="text"
-            register={register("authCode", {
-              required: { value: true, message: formMessages.authCode.required },
-            })}
+            register={register("authCode")}
             error={errors.authCode ? true : false}
             helperText={errors.authCode ? errors.authCode.message : ""}
             disabled={formSubmitting}
@@ -104,13 +89,9 @@ const ForgotPasswordSubmitForm = (props) => {
           />
         </Box>
         <Box>
-          <Button
-            type="submit"
-            variant="contained"
-            size="large"
-            disabled={formSubmitting}>
-              Update
-          </Button>
+          <SubmitButton loading={formSubmitting}>
+            Update
+          </SubmitButton>
         </Box>
       </Box>
     </Grid>
