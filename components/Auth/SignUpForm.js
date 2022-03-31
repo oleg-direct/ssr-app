@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Auth } from 'aws-amplify'
-import { Grid, Box, AlertTitle, Alert } from '@mui/material';
+import { Grid, Box, AlertTitle, Alert, Typography } from '@mui/material';
 import { useForm } from "react-hook-form";
 import { useRouter } from 'next/router';
 import { MuiInput, MuiPassword, SubmitButton} from '@components/common';
@@ -34,20 +34,22 @@ const SignUpForm = () => {
   }
 
   return (
-    <Grid 
-      container
-      direction="row"
-      justifyContent="center"
-      alignItems="center">
-      <Grid item xs={6}>
-      {errorMessage !== '' &&
-        <Box sx={{mb: 4 }}>
-          <Alert severity="error">
-            <AlertTitle>Error</AlertTitle>
-            {errorMessage}
-          </Alert>
-        </Box>
-      }
+      <Grid xs={11} sm={8} md={10} lg={8} xl={6} sx={{
+        p: 5,
+        borderRadius: 3,
+        background: '#ffffff'
+      }}>
+        {errorMessage !== '' &&
+          <Box sx={{mb: 4 }}>
+            <Alert severity="error">
+              <AlertTitle>Error</AlertTitle>
+              {errorMessage}
+            </Alert>
+          </Box>
+        }
+        <Typography variant="h3" gutterBottom>
+          Sign up
+        </Typography>
       <Box
         component="form"
         noValidate
@@ -96,7 +98,6 @@ const SignUpForm = () => {
         </Box>
       </Box>
     </Grid>
-  </Grid>
   )
 }
 

@@ -9,7 +9,9 @@ export default function Layout(props) {
           <title>{title}</title>
           <meta property="og:title" content={title} key="title" />
         </Head>
-        <main>{children}</main>
+        <body style={{background: "#e4e7ec"}}>
+            <main>{children}</main>
+        </body>
       </>
     )
   }

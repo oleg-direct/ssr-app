@@ -6,9 +6,53 @@ import SignUpForm from '@components/Auth/SignUpForm'
 const SignUpPage = () => {
   return (
     <Layout title="Sign Up">
-      <Grid container component="main" sx={{ height: '100vh' }}>
-      {/* <Container maxWidth="lg" sx={{background: 'green'}}> */}
-        <Grid
+      {/* <Grid container component="main" sx={{ height: '100vh' }}> */}
+      {/* <Container maxWidth="lg" sx={{ height: '80vh', background: '#FFFFFF', borderRadius: 3,}}> */}
+        <Grid container component="main" alignItems="stretch" sx={{
+          background: 'pink',
+          height: '100vh',
+          backgroundImage: 'url(https://source.unsplash.com/random)',
+          backgroundRepeat: 'no-repeat',
+          backgroundColor: (t) =>
+            t.palette.mode === 'light' ? t.palette.grey[50] : t.palette.grey[900],
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+        }}>
+          <Grid
+            container
+            justifyContent="center"
+            alignItems="center"
+            xs={12} md={6}>
+            <Grid
+              container
+              justifyContent="center"
+              alignItems="center"
+              >
+              <Typography variant="h3" gutterBottom>
+                SSR APP
+              </Typography>
+            </Grid>
+          </Grid>
+          <Grid
+            container
+            spacing={0}
+            direction="column"
+            alignItems="center"
+            justifyContent="center"
+            xs={12} md={6}>
+            <Grid
+              // sx={{
+              //   background: 'blue'
+              // }}
+              container
+              justifyContent="center"
+              alignItems="center"
+              >
+              <SignUpForm />
+            </Grid>
+          </Grid>
+        </Grid>
+        {/* <Grid
           item
           xs={false}
           sm={4}
@@ -24,12 +68,12 @@ const SignUpPage = () => {
         />
         <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
           <Typography variant="h3" gutterBottom component="div">
-            Sign Up
+            Sign up
           </Typography>
           <SignUpForm />
-        </Grid>
+        </Grid> */}
       {/* </Container> */}
-      </Grid>
+      {/* </Grid> */}
     </Layout>
   );
 };
