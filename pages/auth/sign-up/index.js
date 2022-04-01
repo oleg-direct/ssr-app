@@ -1,7 +1,10 @@
+import Image from 'next/image'
 import { getServerSidePropsAuthPage } from '../../../utils/getServerSidePropsAuthPage'
 import { Container, Grid, Paper, Typography } from "@mui/material";
 import Layout from '@components/Layouts/Auth'
 import SignUpForm from '@components/Auth/SignUpForm'
+import bg from '../../../public/auth-bg.jpg'
+import logo from '../../../public/landify.svg'
 
 const SignUpPage = () => {
   return (
@@ -11,7 +14,7 @@ const SignUpPage = () => {
         <Grid container component="main" alignItems="stretch" sx={{
           background: 'pink',
           height: '100vh',
-          backgroundImage: 'url(https://source.unsplash.com/random)',
+          backgroundImage:  `url(${bg.src})`,
           backgroundRepeat: 'no-repeat',
           backgroundColor: (t) =>
             t.palette.mode === 'light' ? t.palette.grey[50] : t.palette.grey[900],
@@ -28,9 +31,10 @@ const SignUpPage = () => {
               justifyContent="center"
               alignItems="center"
               >
-              <Typography variant="h3" gutterBottom>
-                SSR APP
-              </Typography>
+              <Image
+                src={logo}
+                alt="Landify"
+              />
             </Grid>
           </Grid>
           <Grid
