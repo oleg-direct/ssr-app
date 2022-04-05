@@ -3,6 +3,7 @@ import { Auth } from 'aws-amplify'
 import { Grid, Box, AlertTitle, Alert, Typography } from '@mui/material';
 import { useForm } from "react-hook-form";
 import { useRouter } from 'next/router';
+import Link from 'next/link'
 import { MuiInput, MuiPassword, SubmitButton} from '@components/common';
 import { yupResolver } from "@hookform/resolvers/yup";
 import { singUpSchema } from '@utils/yupSchema';
@@ -95,6 +96,11 @@ const SignUpForm = () => {
           <SubmitButton loading={formSubmitting}>
             Sign Up
           </SubmitButton>
+        </Box>
+        <Box sx={{marginTop: 3, textAlign: "center"}}>
+          <Typography variant="body1">
+            Already have an account? <Link href="/auth/sign-in">Sign in</Link>
+          </Typography>
         </Box>
       </Box>
     </Grid>
