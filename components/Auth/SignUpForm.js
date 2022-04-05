@@ -35,7 +35,7 @@ const SignUpForm = () => {
   }
 
   return (
-      <Grid xs={11} sm={8} md={10} lg={8} xl={6} sx={{
+      <Grid xs={11} sx={{
         p: 5,
         borderRadius: 3,
         background: '#ffffff'
