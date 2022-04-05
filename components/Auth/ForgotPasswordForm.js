@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Auth } from 'aws-amplify'
-import { Grid, Box, Alert, AlertTitle, Button, CircularProgress } from '@mui/material';
+import { Grid, Box, Alert, AlertTitle, Button, Typography } from '@mui/material';
 import { formMessages } from '@utils/formMessages'
 import { useForm } from "react-hook-form";
 import MuiInput from '@components/common/Input';
@@ -33,12 +33,12 @@ const ForgotPasswordForm = () => {
   }
 
   return (
-    <Grid 
-      container
-      direction="row"
-      justifyContent="center"
-      alignItems="center">
-      <Grid item xs={6}>
+    <Grid xs={11} sx={{
+      p: 5,
+      borderRadius: 3,
+      background: '#ffffff'
+    }}>
+      <Grid item>
       {successMessage !== '' &&
         <Box sx={{mb: 4 }}>
           <Alert severity="success">
@@ -55,6 +55,9 @@ const ForgotPasswordForm = () => {
           </Alert>
         </Box>
       }
+      <Typography variant="h3" gutterBottom>
+        Forgot Password
+      </Typography>
       <Box
         component="form"
         noValidate

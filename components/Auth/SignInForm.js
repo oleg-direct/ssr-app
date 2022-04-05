@@ -1,7 +1,6 @@
-
 import { useState } from 'react';
 import { Auth } from 'aws-amplify';
-import { Grid, Box, Alert, AlertTitle, Link } from '@mui/material';
+import { Grid, Box, Alert, AlertTitle, Link, Typography } from '@mui/material';
 import { useForm } from "react-hook-form";
 import { useRouter } from 'next/router';
 import { MuiInput, MuiPassword, SubmitButton} from '@components/common';
@@ -19,8 +18,10 @@ const SignInForm = () => {
 
   async function onSubmit(data) {
     const { email, password } = data;
+
     setFormSubmitting(true);
     setErrorMessage('');
+    
     try {
       await Auth.signIn(email, password).then((user) => {
         router.push('/account');
@@ -31,13 +32,13 @@ const SignInForm = () => {
     }
   }
 
-  return (
-    <Grid 
-      container
-      direction="row"
-      justifyContent="center"
-      alignItems="center">
-      <Grid item xs={6}>
+  return ( 
+    <Grid xs={11} sx={{
+      p: 5,
+      borderRadius: 3,
+      background: '#ffffff'
+    }}>
+      <Grid item>
       {errorMessage !== '' &&
         <Box sx={{mb: 4 }}>
           <Alert severity="error">
@@ -46,6 +47,9 @@ const SignInForm = () => {
           </Alert>
         </Box>
       }
+      <Typography variant="h3" gutterBottom>
+        Sign in
+      </Typography>
       <Box
         component="form"
         noValidate
@@ -82,6 +86,11 @@ const SignInForm = () => {
           <SubmitButton loading={formSubmitting}>
             Sign In
           </SubmitButton>
+        </Box>
+        <Box sx={{marginTop: 3, textAlign: "center"}}>
+          <Typography variant="body1">
+            Not registered yet? <Link href="/auth/sign-up">Sign up</Link>
+          </Typography>
         </Box>
       </Box>
     </Grid>

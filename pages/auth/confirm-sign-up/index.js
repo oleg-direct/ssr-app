@@ -1,15 +1,11 @@
 import { getServerSidePropsAuthPage } from '../../../utils/getServerSidePropsAuthPage';
-import Container from "@mui/material/Container";
-import Layout from '@components/Layouts/Default';
+import Layout from '@components/Layouts/Auth';
 import ConfirmSignUpForm from '@components/Auth/ConfirmSignUpForm';
 
 const ConfirmSignUpPage = () => {
   return (
-    <Layout title="Confirm Sign Up">
-      <Container maxWidth="lg">
-        <h1>Confirm Sign Up</h1>
-        <ConfirmSignUpForm />
-      </Container>
+    <Layout title="Confirm Sign up">
+      <ConfirmSignUpForm />
     </Layout>
   );
 };
