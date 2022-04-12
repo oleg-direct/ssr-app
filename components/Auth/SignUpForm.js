@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Auth } from 'aws-amplify'
-import { Grid, Box, AlertTitle, Alert, Typography } from '@mui/material';
+import { Grid, Box, AlertTitle, Alert, Typography, FormControlLabel, Checkbox, FormControl, FormHelperText } from '@mui/material';
 import { useForm } from "react-hook-form";
 import { useRouter } from 'next/router';
 import Link from 'next/link'
@@ -40,6 +40,7 @@ const SignUpForm = () => {
         borderRadius: 3,
         background: '#ffffff'
       }}>
+        {console.log('errors', errors)}
         {errorMessage !== '' &&
           <Box sx={{mb: 4 }}>
             <Alert severity="error">
@@ -93,13 +94,40 @@ const SignUpForm = () => {
           />
         </Box>
         <Box>
+          <FormControl
+            error={errors.tsAndCs ? true : false}
+            fullWidth>
+            <FormControlLabel
+              labelPlacement="end"
+                control={
+                  <Checkbox
+                    id="tsAndCs"
+                    name="tsAndCs"
+                    disabled={formSubmitting}
+                    {...register('tsAndCs')}
+                    />
+                }
+                label={(
+                  <Box>
+                    <Typography variant="body1">
+                      Creating an account means you’re okay with our <Link href="/terms-of-service">Terms of Service</Link>, <Link href="/privacy-policy">Privacy Policy</Link>, and our default <Link href="/notification-settings">Notification Settings</Link>.
+                    </Typography>
+                  </Box>
+                )}
+              />
+              {errors.tsAndCs &&
+                <FormHelperText error>{errors.tsAndCs.message}</FormHelperText>
+              }
+          </FormControl>
+        </Box>
+        <Box>
           <SubmitButton loading={formSubmitting}>
             Sign Up
           </SubmitButton>
         </Box>
         <Box sx={{marginTop: 3, textAlign: "center"}}>
           <Typography variant="body1">
-            Already have an account? <Link href="/auth/sign-in">Sign in</Link>
+            Already a member? <Link href="/auth/sign-in">Sign In</Link>
           </Typography>
         </Box>
       </Box>

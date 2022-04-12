@@ -23,7 +23,10 @@ export const singUpSchema = yup.object().shape({
     password: yup
     .string()
     .required(formMessages.password.required)
-    .matches(formRegex.password, formMessages.password.invalid)
+    .matches(formRegex.password, formMessages.password.invalid),
+    tsAndCs: yup
+    .bool()
+    .oneOf([true], formMessages.terms.required)
 })
 
 export const forgotPasswordSchema = yup.object().shape({

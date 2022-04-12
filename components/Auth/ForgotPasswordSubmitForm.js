@@ -1,5 +1,5 @@
 import { Auth } from 'aws-amplify'
-import { Grid, Box, Alert, AlertTitle } from '@mui/material';
+import { Grid, Box, Alert, AlertTitle, Typography } from '@mui/material';
 import { useForm } from "react-hook-form";
 import { useRouter } from 'next/router';
 import { useState } from 'react';
@@ -32,12 +32,15 @@ const ForgotPasswordSubmitForm = (props) => {
   }
 
   return (
-    <Grid 
-      container
-      direction="row"
-      justifyContent="center"
-      alignItems="center">
-      <Grid item xs={6}>
+    <Grid xs={11} sx={{
+      p: 5,
+      borderRadius: 3,
+      background: '#ffffff'
+    }}>
+      <Typography variant="h3" gutterBottom>
+        Update Password
+      </Typography>
+      <Grid item>
       {errorMessage !== '' &&
         <Box sx={{mb: 4 }}>
           <Alert severity="error">
