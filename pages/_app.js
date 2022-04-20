@@ -27,7 +27,7 @@ export default function MyApp(props) {
 
   async function authListener() {
     Hub.listen('auth', (data) => {
-      console.log('hub', data)
+      // console.log('hub', data)
       switch (data.payload.event) {
         case 'signIn':
           return setSignedInUser(true)

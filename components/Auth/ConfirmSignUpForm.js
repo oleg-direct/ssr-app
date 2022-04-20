@@ -1,16 +1,22 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Auth } from 'aws-amplify';
-import { Grid, Box, TextField, Alert, Button, CircularProgress } from '@mui/material';
+import { Grid, Box, Alert, Typography } from '@mui/material';
 import { useForm } from "react-hook-form";
 import { useRouter } from 'next/router';
-import MuiInput from '@components/common/Input';
+import { MuiInput, SubmitButton} from '@components/common';
 import { yupResolver } from "@hookform/resolvers/yup";
 import { ConfirmSignUpSchema } from '@utils/yupSchema';
 
 const ConfirmSignUpForm = () => {
   const router = useRouter();
+  // console.log(router.query);
+  const { email, code} = router.query
   const [errorMessage, setErrorMessage] = useState('');
   const [formSubmitting, setFormSubmitting] = useState(false);
+
+  useEffect(() => {
+
+  }, [])
 
   const { register, handleSubmit, formState: { errors } } = useForm({
     resolver: yupResolver(ConfirmSignUpSchema),
@@ -31,17 +37,11 @@ const ConfirmSignUpForm = () => {
   }
 
   return (
-    <Grid 
-      container
-      direction="row"
-      justifyContent="center"
-      alignItems="center">
-      <Grid item xs={6}>
-      {formSubmitting === true &&
-        <Box>
-          <CircularProgress />
-        </Box>
-      }
+    <Grid xs={11} sx={{
+        p: 5,
+        borderRadius: 3,
+        background: '#ffffff'
+      }}>
       {errorMessage !== '' &&
         <Box>
           <Alert severity="error">
@@ -49,6 +49,9 @@ const ConfirmSignUpForm = () => {
           </Alert>
         </Box>
       }
+      <Typography variant="h3" gutterBottom>
+        Confirm Sign up
+      </Typography>
       <Box
         component="form"
         noValidate
@@ -64,6 +67,7 @@ const ConfirmSignUpForm = () => {
             error={errors.email ? true : false}
             helperText={errors.email ? errors.email.message : ""}
             disabled={formSubmitting}
+            defaultValue={email}
             fullWidth
           />
         </Box>
@@ -76,19 +80,15 @@ const ConfirmSignUpForm = () => {
             error={errors.authCode ? true : false}
             helperText={errors.authCode ? errors.authCode.message : ""}
             disabled={formSubmitting}
+            defaultValue={code}
             fullWidth />
         </Box>
         <Box>
-          <Button
-            type="submit"
-            variant="contained"
-            size="large"
-            disabled={formSubmitting}>
-              Confirm
-          </Button>
+          <SubmitButton loading={formSubmitting}>
+            Confirm
+          </SubmitButton>
         </Box>
       </Box>
-    </Grid>
   </Grid>
   )
 }

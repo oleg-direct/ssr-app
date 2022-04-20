@@ -10,6 +10,7 @@ import { singUpSchema } from '@utils/yupSchema';
 
 const SignUpForm = () => {
   const router = useRouter();
+  const [successMessage, setSuccessMessage] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
   const [formSubmitting, setFormSubmitting] = useState(false);
 
@@ -25,8 +26,10 @@ const SignUpForm = () => {
 
     try {
       await Auth.signUp({ name: name, username: email, password, attributes: { email, name }}).then((user) => {
-        console.log('success', user)
-        // router.push('/account');
+        console.log('Auth.signUp user', user)
+        // Auth.signIn(email, password).then(() => {
+        //   router.push('/account');
+        // })
       })
     } catch (error) {
       setFormSubmitting(false);
@@ -40,7 +43,6 @@ const SignUpForm = () => {
         borderRadius: 3,
         background: '#ffffff'
       }}>
-        {console.log('errors', errors)}
         {errorMessage !== '' &&
           <Box sx={{mb: 4 }}>
             <Alert severity="error">
@@ -93,7 +95,7 @@ const SignUpForm = () => {
             fullWidth
           />
         </Box>
-        <Box>
+        <Box sx={{marginBottom: 2}}>
           <FormControl
             error={errors.tsAndCs ? true : false}
             fullWidth>
@@ -109,7 +111,7 @@ const SignUpForm = () => {
                 }
                 label={(
                   <Box>
-                    <Typography variant="body1">
+                    <Typography variant="body2">
                       Creating an account means you’re okay with our <Link href="/terms-of-service">Terms of Service</Link>, <Link href="/privacy-policy">Privacy Policy</Link>, and our default <Link href="/notification-settings">Notification Settings</Link>.
                     </Typography>
                   </Box>

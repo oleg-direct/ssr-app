@@ -89,7 +89,7 @@ const SignInForm = () => {
         </Box>
         <Box sx={{marginTop: 3, textAlign: "center"}}>
           <Typography variant="body1">
-            Not registered yet? <Link href="/auth/sign-up">Sign up</Link>
+            Not a member? <Link href="/auth/sign-up">Sign up now</Link>
           </Typography>
         </Box>
       </Box>
